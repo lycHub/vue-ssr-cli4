@@ -1,22 +1,6 @@
-const LessFunc = require('less-plugin-functions');
-const apiPrefix = ['/app_v3', '/w'];
-const proxy = {};
-apiPrefix.forEach(item => {
-  proxy[item] = {
-    target: 'https://m.zuzuche.com',
-    changeOrigin: true
-  }
-});
-module.exports = {
-  devServer: {
-    port: 4200,
-    proxy
-  },
-  css: {
-    loaderOptions: {
-      less: {
-        plugins: [new LessFunc()]
-      }
-    }
-  }
-}
+const clientConfig = require('./webpack/webpack.config.client')
+const serverConfig = require('./webpack/webpack.config.server')
+const TARGET_NODE = process.env.WEBPACK_TARGET === 'node'
+console.log('TARGET_NODE', TARGET_NODE);
+// const isDev = process.env.NODE_ENV === 'development'
+module.exports = TARGET_NODE ? serverConfig : clientConfig
