@@ -1,6 +1,7 @@
 const baseConfig = require('./webpack.config.base');
 const path = require('path');
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
+const webpack = require('webpack')
 const config = {
   // publicPath: 'http://127.0.0.1:4200/',
   outputDir: 'server-build',
@@ -16,7 +17,9 @@ const config = {
     optimization: {
       splitChunks: false
     },
-    plugins: [new VueServerPlugin()]
+    plugins: [
+      new VueServerPlugin()
+    ]
   }
 }
 // module.exports = merge(baseConfig, config);
