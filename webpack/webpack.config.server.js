@@ -3,6 +3,8 @@ const merge = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals')
 const path = require('path');
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
+
+
 const config = {
   outputDir: 'server-build',
   configureWebpack: {

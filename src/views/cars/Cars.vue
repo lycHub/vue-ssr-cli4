@@ -12,3 +12,10 @@
     }
   }
 </script>
+<style lang="less" scoped>
+  .about {
+    h1 {
+      color: #42b983;
+    }
+  }
+</style>
