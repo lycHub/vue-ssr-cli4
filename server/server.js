@@ -2,10 +2,10 @@ const path = require('path')
 const Koa = require('koa')
 const Send = require('koa-send')
 const koaBody = require('koa-body')
-const koaStatic = require("koa-static");
-const koaMount = require('koa-mount')
+// const koaStatic = require("koa-static");
+// const koaMount = require('koa-mount')
 const app = new Koa()
-const resolve = file => path.resolve(__dirname, file);
+// const resolve = file => path.resolve(__dirname, file);
 app.keys = ['vue ssr tech']
 const isDev = process.env.NODE_ENV === 'development'
 app.use(async (ctx, next) => {
@@ -35,7 +35,15 @@ app.use(koaBody())
 // app.use(koaMount('/dist', koaStatic(resolve("../dist"))));
 // app.use(koaMount('/public', koaStatic(resolve("../public"))));
 
-let pageRouter = require('./routers/dev-ssr')
+let pageRouter;
+
+if (isDev) {
+  pageRouter = require('./routers/dev-ssr')
+} else {
+  pageRouter = require('./routers/prod-ssr')
+  // pageRouter = require('./routers/ssr-no-bundle')
+}
+
 app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
 const HOST = process.env.HOST || '0.0.0.0'

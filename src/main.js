@@ -10,7 +10,7 @@ if (!Vue.prototype.$isServer) {
   require('lib-flexible')
 }
 
-console.log('VUE_ENV', process.env.VUE_ENV);
+// console.log('VUE_ENV', process.env.VUE_ENV);
 
 export default function () {
   const router = createRouter()

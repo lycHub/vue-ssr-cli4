@@ -6,7 +6,10 @@
     "dev:client": "vue-cli-service serve",
     "dev:server": "nodemon server/server.js",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-    "build": "vue-cli-service webpack"
+    "build:client": "vue-cli-service build",
+    "build:server": "cross-env NODE_ENV=production WEBPACK_TARGET=node vue-cli-service build",
+    "build": "concurrently \"npm run build:client\" \"npm run build:server\"",
+    "start": "cross-env NODE_ENV=production PORT=3800 node server/server.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -35,9 +38,9 @@
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "less-plugin-functions": "^1.0.0",
-    "lodash.merge": "^4.6.2",
     "memory-fs": "^0.5.0",
     "nodemon": "^2.0.2",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "webpack-merge": "^4.2.2"
   }
 }

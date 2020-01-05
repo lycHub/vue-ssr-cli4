@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="zc-box">
-      <h1>国际租车aa</h1>
+      <h1>国际租车</h1>
       <div class="form-box">
         <div class="addrs">
           <div class="addr addr-city">

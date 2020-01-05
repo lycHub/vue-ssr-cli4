@@ -1,8 +1,5 @@
-// const merge = require('lodash.merge');
-// const webpack = require('webpack')
+const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config.base');
-const path = require('path');
-const VueClientPlugin = require('vue-server-renderer/client-plugin')
 const apiPrefix = ['/app_v3', '/w'];
 const proxy = {};
 apiPrefix.forEach(item => {
@@ -12,7 +9,6 @@ apiPrefix.forEach(item => {
   }
 });
 const config = {
-  publicPath: 'http://127.0.0.1:4200/',
   devServer: {
     headers: { 'Access-Control-Allow-Origin': '*' },
     historyApiFallback: true,
@@ -23,15 +19,7 @@ const config = {
     },*/
     port: 4200,
     proxy
-  },
-  configureWebpack: {
-    entry: path.join(__dirname, `../src/client-entry.js`),
-    plugins: [
-     /* new webpack.DefinePlugin({
-        'process.env.VUE_ENV': '"client"'
-      }),*/
-      new VueClientPlugin()
-    ]
   }
 }
-module.exports = Object.assign({}, baseConfig, config);
+module.exports = merge(baseConfig, config);
+// module.exports = Object.assign({}, baseConfig, config);
