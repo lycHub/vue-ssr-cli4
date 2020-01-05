@@ -41,6 +41,7 @@
     "memory-fs": "^0.5.0",
     "nodemon": "^2.0.2",
     "vue-template-compiler": "^2.6.10",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "webpack-node-externals": "^1.7.2"
   }
 }

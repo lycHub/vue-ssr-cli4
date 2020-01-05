@@ -2,10 +2,10 @@ const path = require('path')
 const Koa = require('koa')
 const Send = require('koa-send')
 const koaBody = require('koa-body')
-// const koaStatic = require("koa-static");
-// const koaMount = require('koa-mount')
+const koaStatic = require("koa-static");
+const koaMount = require('koa-mount')
 const app = new Koa()
-// const resolve = file => path.resolve(__dirname, file);
+const resolve = file => path.resolve(__dirname, file);
 app.keys = ['vue ssr tech']
 const isDev = process.env.NODE_ENV === 'development'
 app.use(async (ctx, next) => {
@@ -24,7 +24,7 @@ app.use(async (ctx, next) => {
 });
 
 app.use(async (ctx, next) => {
-  if (ctx.path.includes('.')) {
+  if (ctx.path === '/favicon.ico') {
     await Send(ctx, ctx.path, {root: path.join(__dirname,'../public/')})
   } else {
     await next()
@@ -32,7 +32,9 @@ app.use(async (ctx, next) => {
 });
 
 app.use(koaBody())
-// app.use(koaMount('/dist', koaStatic(resolve("../dist"))));
+
+// 挂载今天资源
+app.use(koaMount('/dist', koaStatic(resolve("../dist"))));
 // app.use(koaMount('/public', koaStatic(resolve("../public"))));
 
 let pageRouter;

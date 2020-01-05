@@ -18,7 +18,7 @@ module.exports = async (ctx, renderer, template) => {
       scripts: context.renderScripts(),
       title: title.text(),
       meta: meta.text(),
-      // initalState: context.renderState()
+      initalState: context.renderState()
     });
     ctx.body = html
   } catch (err) {
