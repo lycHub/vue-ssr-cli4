@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="zc-box">
-      <h1>国际租车</h1>
+      <h1 @click="onclick">国际租车</h1>
       <div class="form-box">
         <div class="addrs">
           <div class="addr addr-city">
@@ -56,10 +56,23 @@
 </template>
 
 <script>
+  import axios from 'axios';
 export default {
   name: 'home',
   metaInfo() {
     return this.$route.meta.metaInfo;
+  },
+  /*mounted() {
+    axios.get('/api/app_v3/api/baseInfo.php').then(res => {
+      console.log('baseInfo', res);
+    })
+  }*/
+  methods: {
+    onclick() {
+      axios.get('/api/app_v3/api/baseInfo.php').then(res => {
+        console.log('baseInfo', res);
+      })
+    }
   }
 }
 </script>

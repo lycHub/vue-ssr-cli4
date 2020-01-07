@@ -4,6 +4,7 @@ const Send = require('koa-send')
 const koaBody = require('koa-body')
 const koaStatic = require("koa-static");
 const koaMount = require('koa-mount')
+const proxy = require('koa-server-http-proxy')
 const app = new Koa()
 const resolve = file => path.resolve(__dirname, file);
 app.keys = ['vue ssr tech']
@@ -30,6 +31,15 @@ app.use(async (ctx, next) => {
     await next()
   }
 });
+
+// 代理所有前端请求
+app.use(proxy('/api', {
+  target: 'https://m.zuzuche.com',
+  changeOrigin: true,
+  pathRewrite: {
+    '^/api': ''
+  }
+}));
 
 app.use(koaBody())
 
