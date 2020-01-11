@@ -17,6 +17,9 @@ if (!Vue.prototype.$isServer) {
 // 全局指令
 import './directives'
 
+// 全局组件
+import './components'
+
 // console.log('VUE_ENV', process.env.VUE_ENV);
 
 export default function () {
