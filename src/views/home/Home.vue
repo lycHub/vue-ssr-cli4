@@ -3,13 +3,14 @@
     <header class="top-bar new_header bgef header">
       <div class="logo"><img src="../../assets/images/logo.png" alt="租租车"></div>
     </header>
-    <div class="swiper-container">
-      <div class="swiper-item">
-        <img src="//imgcdn5.zuzuche.com/static/95/94/cc75097a52db982585089fca16c7c734.jpg!/quality/70/format/jpg" alt="">
-      </div>
-    </div>
+    <div class="kong_h"></div>
+    <van-swipe :autoplay="3000" indicator-color="white">
+      <van-swipe-item v-for="item of baseInfo.carBanner" :key="item.img">
+        <img :src="item.img" />
+      </van-swipe-item>
+    </van-swipe>
     <div class="zc-box">
-      <h1 @click="onclick">国际租车</h1>
+      <h1 v-color-swatch="'#73ff4a'">国际租车</h1>
       <div class="form-box">
         <div class="addrs">
           <div class="addr addr-city">
@@ -50,29 +51,32 @@
           </div>
         </div>
       </div>
-      <router-link to="/cars">Cars</router-link>
+      <van-button type="primary" to="/cars">Cars</van-button>
     </div>
   </div>
 </template>
 
 <script>
-  import axios from 'axios';
+  import homeServe from '../../service/Home.service';
+
 export default {
   name: 'home',
   metaInfo() {
     return this.$route.meta.metaInfo;
   },
-  /*mounted() {
-    axios.get('/api/app_v3/api/baseInfo.php').then(res => {
-      console.log('baseInfo', res);
-    })
-  }*/
-  methods: {
-    onclick() {
-      axios.get('/api/app_v3/api/baseInfo.php').then(res => {
-        console.log('baseInfo', res);
-      })
+  data() {
+    return {
+      baseInfo: {}
     }
+  },
+  beforeMount() {
+    homeServe.getBaseInfo().then(res => {
+      this.baseInfo = res;
+      console.log('homeServe vbaseInfo', res);
+    });
+  },
+  methods: {
+
   }
 }
 </script>
@@ -93,6 +97,9 @@ export default {
       .logo {
         width: 50%;
       }
+    }
+    .kong_h {
+      height: px2rem(40);
     }
     .zc-box {
       position: relative;
