@@ -56,7 +56,7 @@
               btn: 'close',
               autoClose: 5000,
               render: () => {
-                return (<strong style="color: red;">这是render的notice</strong>)
+                return (<strong style="color: #f60;">这是render的notice</strong>)
               }
             })
           }
