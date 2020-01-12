@@ -38,7 +38,8 @@ export default {
       verticalOffset: 0,
       delay: this.autoClose,
       height: 0,
-      visible: false
+      visible: false,
+      type: 'info'
     }
   }
 }

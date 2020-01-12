@@ -1,7 +1,7 @@
 <template>
   <transition name="fade" @after-leave="afterLeave" @after-enter="afterEnter">
     <div
-      class="notification"
+      :class="warpCls"
       :style="style"
       v-show="visible"
       @mouseenter="clearTimer"
@@ -21,7 +21,7 @@ export default {
   props: {
     content: {
       type: String,
-      required: true
+      default: ''
     },
     btn: {
       type: String,
@@ -35,12 +35,16 @@ export default {
   },
   data () {
     return {
-      visible: true
+      visible: true,
+      type: 'info'
     }
   },
   computed: {
     style () {
       return {}
+    },
+    warpCls() {
+      return ['notification', 'notification-' + this.type]
     }
   },
   methods: {
@@ -63,9 +67,6 @@ export default {
   position: fixed;
   right: 10px;
   display: inline-flex;
-  background: #f0faff;
-  color: #2e8bf0;
-  border: 1px solid #d4eeff;
   align-items: center;
   padding: 20px;
   min-width: 280px;
@@ -73,12 +74,29 @@ export default {
   transition: all .3s;
 }
 
+.notification-info {
+  background: #f0faff;
+  color: #2e8bf0;
+  border: 1px solid #d4eeff;
+}
+
+.notification-success {
+  background: #edfff3;
+  color: #19bf6c;
+  border: 1px solid #bbf2cf;
+}
+
+.notification-error {
+  background: #ffefe6;
+  color: #ed3f13;
+  border: 1px solid #ffcfb8;
+}
+
 .content {
   padding: 0;
   color: inherit;
 }
 .btn {
-  color: #ff4081;
   padding-left: 24px;
   margin-left: auto;
   cursor: pointer;

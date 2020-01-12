@@ -46,18 +46,18 @@
       onSubmit() {
         this.$refs['myForm'].validate(valid => {
           if (valid) {
-            this.$notify({
+            this.$notify.success({
               content: 'ok',
               btn: 'close'
             })
           } else {
-            this.$notify({
+            this.$notify.error({
               content: 'error',
               btn: 'close',
               autoClose: 5000,
-              render: () => {
+              /*render: () => {
                 return (<strong style="color: #f60;">这是render的notice</strong>)
-              }
+              }*/
             })
           }
         })

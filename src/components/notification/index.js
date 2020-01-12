@@ -21,36 +21,50 @@ const removeInstance = (instance) => {
   }
 }
 
-const notify = (options) => {
-  if (Vue.prototype.$isServer) return;
-  const instance = new NotificationConstructor({
-    propsData: options,
-  })
+const notify = {
+  show(type, options) {
+    if (Vue.prototype.$isServer) return;
+    const instance = new NotificationConstructor({
+      propsData: options,
+      data: {
+        type
+      }
+    })
 
-  const id = `notification_${seed++}`
-  instance.id = id
+    const id = `notification_${seed++}`
+    instance.id = id
 
-  // 不传选择器，表示弹框dom已经生成好，只是没有插入到页面去，需要自己用dom方式手动挂载
-  instance.vm = instance.$mount() // vue实例
-  document.body.appendChild(instance.vm.$el)
-  instance.vm.visible = true
+    // 不传选择器，表示弹框dom已经生成好，只是没有插入到页面去，需要自己用dom方式手动挂载
+    instance.vm = instance.$mount() // vue实例
+    document.body.appendChild(instance.vm.$el)
+    instance.vm.visible = true
 
-  let verticalOffset = 0
-  instances.forEach(item => {
-    verticalOffset += item.$el.offsetHeight + 16
-  })
-  verticalOffset += 16
-  instance.verticalOffset = verticalOffset
-  instances.push(instance)
-  instance.vm.$on('closed', () => {
-    removeInstance(instance)
-    document.body.removeChild(instance.vm.$el)
-    instance.vm.$destroy()
-  })
-  instance.vm.$on('close', () => {
-    instance.vm.visible = false
-  })
-  return instance.vm
+    let verticalOffset = 0
+    instances.forEach(item => {
+      verticalOffset += item.$el.offsetHeight + 16
+    })
+    verticalOffset += 16
+    instance.verticalOffset = verticalOffset
+    instances.push(instance)
+    instance.vm.$on('closed', () => {
+      removeInstance(instance)
+      document.body.removeChild(instance.vm.$el)
+      instance.vm.$destroy()
+    })
+    instance.vm.$on('close', () => {
+      instance.vm.visible = false
+    })
+    return instance.vm
+  },
+  info(options) {
+    this.show('info', options);
+  },
+  success(options) {
+    this.show('success', options);
+  },
+  error(options) {
+    this.show('error', options);
+  }
 }
 
 export default notify
