@@ -14,6 +14,7 @@
         <van-button type="primary" @click="onSubmit">提交</van-button>
       </my-form-item>
     </my-form>
+<!--    <notification content="aaaaaaaa"></notification>-->
   </div>
 </template>
 <script>
@@ -38,13 +39,22 @@
         }
       }
     },
+    mounted() {
+
+    },
     methods: {
       onSubmit() {
         this.$refs['myForm'].validate(valid => {
           if (valid) {
-            alert('ok');
+            this.$notify({
+              content: 'ok',
+              btn: 'close'
+            })
           } else {
-            console.log('error');
+            this.$notify({
+              content: 'error',
+              btn: 'close'
+            })
           }
         })
       },
