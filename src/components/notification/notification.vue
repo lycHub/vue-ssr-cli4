@@ -5,17 +5,19 @@
       :style="style"
       v-show="visible"
       @mouseenter="clearTimer"
-      @mouseleave="createTimer"
-    >
-      <span class="content">{{content}}</span>
+      @mouseleave="createTimer">
+      <render-cell :render="render" v-if="render"></render-cell>
+      <span class="content" v-else>{{content}}</span>
       <a class="btn" @click="handleClose">{{btn}}</a>
     </div>
   </transition>
 </template>
 
 <script>
+  import RenderCell from '../base/render'
 export default {
   name: 'Notification',
+  components: { RenderCell },
   props: {
     content: {
       type: String,
@@ -24,7 +26,12 @@ export default {
     btn: {
       type: String,
       default: '关闭'
-    }
+    },
+    autoClose: {
+      type: Number,
+      default: 2000
+    },
+    render: Function,
   },
   data () {
     return {

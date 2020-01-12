@@ -13,8 +13,8 @@ const removeInstance = (instance) => {
 
   instances.splice(index, 1)
 
-  if (len <= 1) return
-  const removeHeight = instance.vm.height
+  if (len <= 1) return;
+  const removeHeight = instance.vm.height;
   for (let i = index; i < len - 1; i++) {
     instances[i].verticalOffset =
       parseInt(instances[i].verticalOffset) - removeHeight - 16
@@ -23,18 +23,8 @@ const removeInstance = (instance) => {
 
 const notify = (options) => {
   if (Vue.prototype.$isServer) return;
-
-  const {
-    autoClose,
-    ...rest
-  } = options
   const instance = new NotificationConstructor({
-    propsData: {  // 用new创建实例时传props的方法
-      ...rest
-    },
-    data: {
-      autoClose: autoClose || 3000
-    }
+    propsData: options,
   })
 
   const id = `notification_${seed++}`

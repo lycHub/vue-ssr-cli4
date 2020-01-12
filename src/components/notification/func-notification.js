@@ -7,7 +7,7 @@ export default {
       return {
         position: 'fixed',
         right: '20px',
-        bottom: `${this.verticalOffset}px`
+        top: `${this.verticalOffset}px`
       }
     }
   },
@@ -16,11 +16,11 @@ export default {
   },
   methods: {
     createTimer () {
-      console.log(this.autoClose)
-      if (this.autoClose) {
+      console.log(this.delay)
+      if (this.delay) {
         this.timer = setTimeout(() => {
           this.visible = false
-        }, this.autoClose)
+        }, this.delay)
       }
     },
     clearTimer () {
@@ -38,7 +38,7 @@ export default {
   data () {
     return {
       verticalOffset: 0,
-      autoClose: 3000,
+      delay: this.autoClose,
       height: 0,
       visible: false
     }

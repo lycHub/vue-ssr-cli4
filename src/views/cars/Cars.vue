@@ -14,7 +14,7 @@
         <van-button type="primary" @click="onSubmit">提交</van-button>
       </my-form-item>
     </my-form>
-<!--    <notification content="aaaaaaaa"></notification>-->
+<!--    <notification content="aaaaaaaa" :render="render"></notification>-->
   </div>
 </template>
 <script>
@@ -53,7 +53,11 @@
           } else {
             this.$notify({
               content: 'error',
-              btn: 'close'
+              btn: 'close',
+              autoClose: 5000,
+              render: () => {
+                return (<strong style="color: red;">这是render的notice</strong>)
+              }
             })
           }
         })
