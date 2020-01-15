@@ -1,7 +1,7 @@
 <template>
   <transition name="fade" @after-leave="afterLeave" @after-enter="afterEnter">
     <div
-      :class="warpCls"
+      :class="['notification', 'notification-' + this.type]"
       :style="style"
       v-show="visible"
       @mouseenter="clearTimer"
@@ -35,19 +35,40 @@ export default {
   },
   data () {
     return {
-      visible: true,
+      verticalOffset: 0,
+      delay: this.autoClose,
+      height: 0,
+      visible: false,
       type: 'info'
     }
   },
   computed: {
     style () {
-      return {}
-    },
-    warpCls() {
-      return ['notification', 'notification-' + this.type]
+      return {
+        top: `${this.verticalOffset}px`
+      }
     }
   },
+  mounted () {
+    this.createTimer()
+  },
   methods: {
+    createTimer () {
+      console.log(this.delay)
+      if (this.delay) {
+        this.timer = setTimeout(() => {
+          this.visible = false
+        }, this.delay)
+      }
+    },
+    clearTimer () {
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+    },
+    afterEnter () {
+      this.height = this.$el.offsetHeight
+    },
     handleClose (e) {
       e.preventDefault()
       this.$emit('close')
@@ -55,10 +76,10 @@ export default {
     afterLeave () {
       this.$emit('closed')
     },
-    afterEnter () {},
-    clearTimer () {},
-    createTimer () {}
-  }
+  },
+  beforeDestory () {
+    this.clearTimer()
+  },
 }
 </script>
 

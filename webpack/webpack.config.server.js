@@ -1,6 +1,7 @@
 const baseConfig = require('./webpack.config.base');
 const merge = require('webpack-merge');
 // const nodeExternals = require('webpack-node-externals')
+const Webpack = require('webpack')
 const path = require('path');
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
 
@@ -23,7 +24,11 @@ const config = {
       // minimize: false,
     },
     plugins: [
-      new VueServerPlugin()
+      new VueServerPlugin(),
+      // 避免mini-css-extract-plugin document is not defined
+      new Webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1
+      })
     ]
   }
 }

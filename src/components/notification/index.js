@@ -1,7 +1,5 @@
 import Vue from 'vue'
-import Component from './func-notification'
-
-const NotificationConstructor = Vue.extend(Component)
+import Notification from './notification.vue'
 
 const instances = []
 let seed = 1
@@ -24,12 +22,13 @@ const removeInstance = (instance) => {
 const notify = {
   show(type, options) {
     if (Vue.prototype.$isServer) return;
-    const instance = new NotificationConstructor({
+    const instance = new Vue({
+      extends: Notification,
       propsData: options,
       data: {
         type
       }
-    })
+    });
 
     const id = `notification_${seed++}`
     instance.id = id
