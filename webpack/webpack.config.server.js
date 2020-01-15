@@ -1,6 +1,6 @@
 const baseConfig = require('./webpack.config.base');
 const merge = require('webpack-merge');
-// const nodeExternals = require('webpack-node-externals')
+const nodeExternals = require('webpack-node-externals')
 const Webpack = require('webpack')
 const path = require('path');
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
@@ -15,10 +15,10 @@ const config = {
       libraryTarget: 'commonjs2',
       filename: 'server-entry.js'
     },
-    externals: Object.keys(require('../package.json').dependencies),
-    /*externals: nodeExternals({
+    // externals: Object.keys(require('../package.json').dependencies),
+    externals: nodeExternals({
       whitelist: /\.css$/
-    }),*/
+    }),
     optimization: {
       splitChunks: false,
       // minimize: false,
