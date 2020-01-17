@@ -1,5 +1,5 @@
 const ejs = require('ejs')
-
+const isDev = process.env.NODE_ENV === 'development'
 module.exports = async (ctx, renderer, template) => {
   ctx.headers['Content-Type'] = 'text/html'
   const context = { url: ctx.path }
@@ -14,6 +14,7 @@ module.exports = async (ctx, renderer, template) => {
     const { title, meta } = context.meta.inject()
     const html = ejs.render(template, {
       appString,
+      BASE_URL: isDev ? 'http://127.0.0.1:4200/' : '/dist/',
       style: context.renderStyles(),
       scripts: context.renderScripts(),
       title: title.text(),

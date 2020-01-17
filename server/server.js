@@ -1,36 +1,26 @@
 const path = require('path')
 const Koa = require('koa')
-const Send = require('koa-send')
 const koaBody = require('koa-body')
-const koaStatic = require("koa-static");
-const koaMount = require('koa-mount')
+const staticCache = require('koa-static-cache')
 const proxy = require('koa-server-http-proxy')
 const app = new Koa()
-const resolve = file => path.resolve(__dirname, file);
+
 app.keys = ['vue ssr tech']
 const isDev = process.env.NODE_ENV === 'development'
-app.use(async (ctx, next) => {
-  try {
-    console.log(`request with path ${ctx.path}`)
-    await next()
-  } catch (err) {
-    console.log(err)
-    ctx.status = 500
-    if (isDev) {
-      ctx.body = err.message
-    } else {
-      ctx.body = 'please try again later'
-    }
-  }
-});
 
-app.use(async (ctx, next) => {
+// 挂载静态资源
+app.use(staticCache(path.join(__dirname, '../dist'), {
+  prefix: '/dist'
+}));
+
+
+/*app.use(async (ctx, next) => {
   if (ctx.path === '/favicon.ico') {
     await Send(ctx, ctx.path, {root: path.join(__dirname,'../public/')})
   } else {
     await next()
   }
-});
+});*/
 
 // 代理所有前端请求
 app.use(proxy('/api', {
@@ -43,10 +33,6 @@ app.use(proxy('/api', {
 
 app.use(koaBody())
 
-// 挂载今天资源
-app.use(koaMount('/dist', koaStatic(resolve("../dist"))));
-// app.use(koaMount('/public', koaStatic(resolve("../public"))));
-
 let pageRouter;
 
 if (isDev) {
@@ -58,9 +44,21 @@ if (isDev) {
 
 app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
-const HOST = process.env.HOST || '0.0.0.0'
-const PORT = process.env.PORT || 3333
+
+app.on('error', (err, ctx) => {
+  console.error('server error', err);
+  ctx.throw(500, ctx.path + '：请求错误');
+  if (isDev) {
+    ctx.body = err.message
+  } else {
+    ctx.body = 'please try again later'
+  }
+});
+
+
+const HOST = process.env.HOST || '0.0.0.0';
+const PORT = process.env.PORT || 3333;
 
 app.listen(PORT, HOST, () => {
   console.log(`server is listening on ${HOST}:${PORT}`)
-})
+});

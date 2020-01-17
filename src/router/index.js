@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import Home from '../views/home/Home.vue'
+import Home from '../views/home/Home.vue'
 // import Cars from '../views/cars/Cars.vue'
 Vue.use(VueRouter)
 export default function () {
@@ -12,8 +12,8 @@ export default function () {
       {
         path: '/home',
         name: 'Home',
-        component: () => import(/* webpackChunkName: "home" */ '../views/home/Home.vue'),
-        // component: Home,
+        // component: () => import(/* webpackChunkName: "home" */ '../views/home/Home.vue'),
+        component: Home,
         meta: {
           metaInfo: {
             title: '国际租车_美国租车_欧洲租车_特价预订国外租车_中文服务 - 租租车',

@@ -7,7 +7,8 @@ const isDev = process.env.NODE_ENV === 'development'
 module.exports = {
   publicPath: isDev ? 'http://127.0.0.1:4200/' : '/dist/',
   css: {
-    extract: !isDev,
+    // extract: !isDev,
+    extract: false,
     loaderOptions: {
       less: {
         plugins: [new LessFunc()]
