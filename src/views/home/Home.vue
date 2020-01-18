@@ -52,6 +52,11 @@
         </div>
       </div>
       <van-button type="primary" to="/cars">Cars</van-button>
+      <ul class="async-data">
+        <li v-for="item of baseInfo.btnInfo" :key="item.title">
+          <van-button type="primary" to="/cars">{{item.title}}</van-button>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -64,19 +69,18 @@ export default {
   metaInfo() {
     return this.$route.meta.metaInfo;
   },
-  data() {
-    return {
-      baseInfo: {}
+  asyncData({ store }) {
+    return store.dispatch('getHomeDatas');
+  },
+  computed: {
+    baseInfo() {
+      return this.$store.getters.getBaseInfo
     }
   },
-  beforeMount() {
-    homeServe.getBaseInfo().then(res => {
-      this.baseInfo = res;
-      console.log('homeServe vbaseInfo', res);
+  mounted() {
+    homeServe.getTT().then(res => {
+      console.log('res', res);
     });
-  },
-  methods: {
-
   }
 }
 </script>

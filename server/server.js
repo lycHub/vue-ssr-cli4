@@ -1,9 +1,10 @@
 const path = require('path')
 const Koa = require('koa')
 const koaBody = require('koa-body')
-const staticCache = require('koa-static-cache')
+const staticCache = require('koa-static-cache');
 const proxy = require('koa-server-http-proxy')
 const app = new Koa()
+const testRoute = require('./routers/test-api')
 
 app.keys = ['vue ssr tech']
 const isDev = process.env.NODE_ENV === 'development'
@@ -42,6 +43,7 @@ if (isDev) {
   // pageRouter = require('./routers/ssr-no-bundle')
 }
 
+app.use(testRoute.routes()).use(testRoute.allowedMethods())
 app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
 

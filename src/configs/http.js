@@ -1,5 +1,6 @@
 import axios from "axios";
 
+console.log('VUE_ENV', process.env.VUE_ENV);
 const request = axios.create({
   baseURL: '/api/'
 });

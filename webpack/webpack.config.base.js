@@ -1,5 +1,6 @@
 const LessFunc = require('less-plugin-functions');
 const merge = require('webpack-merge');
+// const Webpack = require('webpack')
 const path = require('path');
 const VueClientPlugin = require('vue-server-renderer/client-plugin')
 const isDev = process.env.NODE_ENV === 'development'
@@ -18,10 +19,10 @@ module.exports = {
   configureWebpack: {
     entry: path.join(__dirname, `../src/client-entry.js`),
     plugins: [
-      /* new webpack.DefinePlugin({
+       /*new Webpack.DefinePlugin({
          'process.env.VUE_ENV': '"client"'
        }),*/
-      new VueClientPlugin()
+       new VueClientPlugin()
     ]
   },
   chainWebpack(config) {
