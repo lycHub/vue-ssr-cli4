@@ -1,19 +1,11 @@
-# my-ssr
+vue-cli4 ssr demo
 
-## Project setup
-```
-npm install
-```
+### 开发环境：
+* npm run dev
+* spa: localhost:4200
+* ssr: localhost:3333
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 生产环境：
+* npm run build
+* npm start
+* 访问：localhost:3800

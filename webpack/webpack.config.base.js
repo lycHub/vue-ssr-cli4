@@ -8,7 +8,7 @@ const isDev = process.env.NODE_ENV === 'development'
 module.exports = {
   publicPath: isDev ? 'http://127.0.0.1:4200/' : '/dist/',
   css: {
-    // extract: !isDev,
+    // extract: !isDev, webpack4 提取css的插件不兼容ssr
     extract: false,
     loaderOptions: {
       less: {
